@@ -23,7 +23,6 @@ body {
     z-index: 2;
 }
 
-/* Intro */
 #intro {
     min-height: 100vh;
     display: flex;
@@ -31,7 +30,6 @@ body {
     justify-content: center;
 }
 
-/* Gift */
 #giftBox {
     display: none;
     font-size: 80px;
@@ -43,12 +41,10 @@ body {
     50% { transform: translateY(-15px); }
 }
 
-/* Main */
 #main {
     display: none;
 }
 
-/* Photo */
 #photo {
     width: 100%;
     max-height: 400px;
@@ -57,25 +53,22 @@ body {
     box-shadow: 0 0 20px rgba(255,255,255,0.6);
 }
 
-/* Message card */
+/* MESSAGE CARD */
 #messageCard {
     display: none;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(6px);
-    padding: 20px;
+    background: rgba(255,255,255,0.18);
+    padding: 22px;
     border-radius: 20px;
-    box-shadow: 0 0 25px rgba(255,255,255,0.3);
-    font-size: 16px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.35);
     line-height: 1.6;
+    font-size: 16px;
 }
 
-/* Caption */
 #caption {
     margin: 12px 0 20px;
     font-size: 18px;
 }
 
-/* Buttons */
 button {
     padding: 12px 20px;
     border-radius: 25px;
@@ -93,14 +86,12 @@ button {
     margin: 15px 0;
 }
 
-/* Cake */
 #cake {
     width: 150px;
     margin-top: 10px;
     cursor: pointer;
 }
 
-/* Audio buttons */
 .audio-buttons {
     display: flex;
     gap: 12px;
@@ -124,10 +115,7 @@ button {
 }
 
 @keyframes floatUp {
-    to {
-        transform: translateY(-110vh);
-        opacity: 0;
-    }
+    to { transform: translateY(-110vh); opacity: 0; }
 }
 
 .confetti {
@@ -138,10 +126,7 @@ button {
 }
 
 @keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-    }
+    to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 </style>
 </head>
@@ -150,24 +135,19 @@ button {
 
 <div class="container">
 
-<!-- Intro -->
 <div id="intro">
     <h1>🎂 Hey Mom 💕</h1>
     <p>I made something for you...</p>
     <button onclick="start()">Open 🎁</button>
 </div>
 
-<!-- Gift -->
 <div id="giftBox" onclick="openGift()">🎁</div>
 
-<!-- Main -->
 <div id="main">
     <h1>Happy Birthday Mom 💖</h1>
 
-    <!-- IMAGE -->
     <img id="photo" src="photo1.jpg">
 
-    <!-- MESSAGE CARD -->
     <div id="messageCard">
         <h2>💖 Happy Birthday, Mom 💖</h2>
         <p>
@@ -202,18 +182,12 @@ button {
 
 </div>
 
-<!-- Audio -->
 <audio id="music" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
 </audio>
 
-<audio id="voice">
-    <source src="voice.mp3">
-</audio>
-
-<audio id="song">
-    <source src="happybirthday.mp3">
-</audio>
+<audio id="voice"><source src="voice.mp3"></audio>
+<audio id="song"><source src="happybirthday.mp3"></audio>
 
 <script>
 let photos = [
@@ -225,44 +199,44 @@ let photos = [
 let i = 0;
 
 function start() {
-    document.getElementById("intro").style.display = "none";
-    document.getElementById("giftBox").style.display = "block";
+    intro.style.display = "none";
+    giftBox.style.display = "block";
 }
 
 function openGift() {
-    document.getElementById("giftBox").style.display = "none";
-    document.getElementById("main").style.display = "block";
-    document.getElementById("music").play();
+    giftBox.style.display = "none";
+    main.style.display = "block";
+    music.play();
     showSlide();
     createHearts();
     createConfetti();
 }
 
 function showSlide() {
-    const photo = document.getElementById("photo");
-    const message = document.getElementById("messageCard");
-    const caption = document.getElementById("caption");
-
     if (i < photos.length) {
         photo.style.display = "block";
-        message.style.display = "none";
+        messageCard.style.display = "none";
         photo.src = photos[i].src;
         caption.innerText = photos[i].text;
     } else {
         photo.style.display = "none";
-        message.style.display = "block";
+        messageCard.style.display = "block";
         caption.innerText = "";
     }
 }
 
 function next() {
-    if (i <= photos.length) i++;
-    showSlide();
+    if (i < photos.length) {
+        i++;
+        showSlide();
+    }
 }
 
 function prev() {
-    if (i > 0) i--;
-    showSlide();
+    if (i > 0) {
+        i--;
+        showSlide();
+    }
 }
 
 function cutCake() {
@@ -271,16 +245,15 @@ function cutCake() {
 }
 
 function playVoice() {
-    document.getElementById("song").pause();
-    document.getElementById("voice").play();
+    song.pause(); song.currentTime = 0;
+    voice.play();
 }
 
 function playSong() {
-    document.getElementById("voice").pause();
-    document.getElementById("song").play();
+    voice.pause(); voice.currentTime = 0;
+    song.play();
 }
 
-/* Effects */
 function createHearts() {
     setInterval(() => {
         let h = document.createElement("div");
@@ -302,8 +275,7 @@ function createConfettiBurst() {
     c.style.left = Math.random() * 100 + "vw";
     c.style.width = "8px";
     c.style.height = "8px";
-    c.style.background =
-        ["yellow","pink","white","red"][Math.floor(Math.random()*4)];
+    c.style.background = ["yellow","pink","white","red"][Math.floor(Math.random()*4)];
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 3000);
 }
