@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Happy Birthday Mom 💖</title>
 
 <style>
@@ -15,11 +15,13 @@ body {
     overflow-x: hidden;
 }
 
-/* Center container */
+/* Container */
 .container {
     max-width: 500px;
     margin: auto;
     padding: 20px;
+    position: relative;
+    z-index: 2;
 }
 
 /* Intro */
@@ -30,7 +32,7 @@ body {
     justify-content: center;
 }
 
-/* Gift */
+/* Gift box */
 #giftBox {
     display: none;
     font-size: 80px;
@@ -58,14 +60,14 @@ body {
 
 /* Caption */
 #caption {
-    margin: 10px 0 20px;
+    margin: 12px 0 20px;
+    font-size: 18px;
 }
 
 /* Buttons */
 button {
-    width: 100%;
-    margin: 8px 0;
-    padding: 12px;
+    margin: 6px;
+    padding: 12px 20px;
     border-radius: 25px;
     border: none;
     font-size: 16px;
@@ -77,32 +79,39 @@ button {
 /* Cake */
 #cake {
     width: 150px;
-    margin-top: 20px;
+    margin-top: 15px;
     cursor: pointer;
 }
 
-/* Desktop tweaks */
-@media (min-width: 768px) {
-    #photo {
-        max-height: 450px;
-    }
-
-    button {
-        width: auto;
-        padding: 12px 20px;
-        margin: 10px;
-    }
-}
-
-/* Effects behind content */
-.heart, .confetti {
+/* Floating hearts */
+.heart {
     position: fixed;
-    z-index: 0;
+    bottom: -20px;
+    font-size: 24px;
+    animation: floatUp 5s linear forwards;
+    z-index: 1;
 }
 
-.container {
-    position: relative;
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    top: -10px;
+    animation: fall 3s linear forwards;
     z-index: 1;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -125,17 +134,21 @@ button {
 <div id="main">
     <h1>Happy Birthday Mom 💖</h1>
 
-    <img id="photo" src="photo1.jpg">
-    <div id="caption">Our memories 💕</div>
+    <img id="photo" src="photo1.jpg" alt="Mom photo">
+    <div id="caption"></div>
 
-    <button onclick="prev()">⬅️ Previous</button>
-    <button onclick="next()">Next ➡️</button>
+    <div>
+        <button onclick="prev()">⬅️ Previous</button>
+        <button onclick="next()">Next ➡️</button>
+    </div>
 
     <h2>Cut the Cake 🎂</h2>
     <img id="cake" src="cake.png" onclick="cutCake()">
 
-    <button onclick="playVoice()">💌 Hear My Message</button>
-    <button onclick="playSong()">🎂 Play Birthday Song</button>
+    <div>
+        <button onclick="playVoice()">💌 Hear My Message</button>
+        <button onclick="playSong()">🎂 Play Birthday Song</button>
+    </div>
 </div>
 
 </div>
@@ -155,9 +168,9 @@ button {
 
 <script>
 let photos = [
-    {src: "photo1.jpg", text: "My favorite person ❤️"},
-    {src: "photo2.jpg", text: "Thank you for everything 💕"},
-    {src: "photo3.jpg", text: "I love you so much ✨"}
+    { src: "photo1.jpg", text: "My favorite person ❤️" },
+    { src: "photo2.jpg", text: "Thank you for everything 💕" },
+    { src: "photo3.jpg", text: "I love you so much ✨" }
 ];
 
 let i = 0;
@@ -193,7 +206,7 @@ function prev() {
 
 function cutCake() {
     alert("🎉 Cake cut!! Love you mom 💖");
-    for(let j=0;j<30;j++) createConfettiBurst();
+    for (let j = 0; j < 40; j++) createConfettiBurst();
 }
 
 function playVoice() {
@@ -223,16 +236,17 @@ function createHearts() {
 }
 
 function createConfetti() {
-    setInterval(() => createConfettiBurst(), 250);
+    setInterval(createConfettiBurst, 300);
 }
 
 function createConfettiBurst() {
     let c = document.createElement("div");
     c.className = "confetti";
     c.style.left = Math.random() * 100 + "vw";
-    c.style.background = ["yellow","pink","white","red"][Math.floor(Math.random()*4)];
     c.style.width = "8px";
     c.style.height = "8px";
+    c.style.background =
+        ["yellow", "pink", "white", "red"][Math.floor(Math.random() * 4)];
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 3000);
 }
