@@ -64,9 +64,8 @@ body {
     font-size: 18px;
 }
 
-/* Buttons */
+/* Buttons (general) */
 button {
-    margin: 6px;
     padding: 12px 20px;
     border-radius: 25px;
     border: none;
@@ -76,11 +75,33 @@ button {
     cursor: pointer;
 }
 
+/* Nav buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
 /* Cake */
 #cake {
     width: 150px;
-    margin-top: 15px;
+    margin-top: 10px;
     cursor: pointer;
+}
+
+/* Audio buttons FIX */
+.audio-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.audio-buttons button {
+    min-width: 200px;
+    box-shadow: 0 6px 15px rgba(255,255,255,0.25);
 }
 
 /* Floating hearts */
@@ -137,7 +158,7 @@ button {
     <img id="photo" src="photo1.jpg" alt="Mom photo">
     <div id="caption"></div>
 
-    <div>
+    <div class="nav-buttons">
         <button onclick="prev()">⬅️ Previous</button>
         <button onclick="next()">Next ➡️</button>
     </div>
@@ -145,7 +166,8 @@ button {
     <h2>Cut the Cake 🎂</h2>
     <img id="cake" src="cake.png" onclick="cutCake()">
 
-    <div>
+    <!-- FIXED BUTTONS -->
+    <div class="audio-buttons">
         <button onclick="playVoice()">💌 Hear My Message</button>
         <button onclick="playSong()">🎂 Play Birthday Song</button>
     </div>
