@@ -15,9 +15,8 @@ body {
     overflow-x: hidden;
 }
 
-/* Container */
 .container {
-    max-width: 500px;
+    max-width: 520px;
     margin: auto;
     padding: 20px;
     position: relative;
@@ -32,7 +31,7 @@ body {
     justify-content: center;
 }
 
-/* Gift box */
+/* Gift */
 #giftBox {
     display: none;
     font-size: 80px;
@@ -58,13 +57,25 @@ body {
     box-shadow: 0 0 20px rgba(255,255,255,0.6);
 }
 
+/* Message card */
+#messageCard {
+    display: none;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.3);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
 /* Caption */
 #caption {
     margin: 12px 0 20px;
     font-size: 18px;
 }
 
-/* Buttons (general) */
+/* Buttons */
 button {
     padding: 12px 20px;
     border-radius: 25px;
@@ -75,12 +86,11 @@ button {
     cursor: pointer;
 }
 
-/* Nav buttons */
 .nav-buttons {
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 15px;
+    margin: 15px 0;
 }
 
 /* Cake */
@@ -90,7 +100,7 @@ button {
     cursor: pointer;
 }
 
-/* Audio buttons FIX */
+/* Audio buttons */
 .audio-buttons {
     display: flex;
     gap: 12px;
@@ -104,7 +114,7 @@ button {
     box-shadow: 0 6px 15px rgba(255,255,255,0.25);
 }
 
-/* Floating hearts */
+/* Effects */
 .heart {
     position: fixed;
     bottom: -20px;
@@ -120,7 +130,6 @@ button {
     }
 }
 
-/* Confetti */
 .confetti {
     position: fixed;
     top: -10px;
@@ -155,7 +164,26 @@ button {
 <div id="main">
     <h1>Happy Birthday Mom 💖</h1>
 
-    <img id="photo" src="photo1.jpg" alt="Mom photo">
+    <!-- IMAGE -->
+    <img id="photo" src="photo1.jpg">
+
+    <!-- MESSAGE CARD -->
+    <div id="messageCard">
+        <h2>💖 Happy Birthday, Mom 💖</h2>
+        <p>
+            I take this moment to thank you for being the person you are.
+            You're kind, helpful, supportive and extremely lovable.
+            <br><br>
+            All of us are so blessed to have you as a mother, friend, wife,
+            daughter, and sister.
+            <br><br>
+            Thank you for making every day so bright.
+            Here is to many more such lovely birthdays to come!
+            <br><br>
+            Hope you have the best day! 💕
+        </p>
+    </div>
+
     <div id="caption"></div>
 
     <div class="nav-buttons">
@@ -166,7 +194,6 @@ button {
     <h2>Cut the Cake 🎂</h2>
     <img id="cake" src="cake.png" onclick="cutCake()">
 
-    <!-- FIXED BUTTONS -->
     <div class="audio-buttons">
         <button onclick="playVoice()">💌 Hear My Message</button>
         <button onclick="playSong()">🎂 Play Birthday Song</button>
@@ -206,24 +233,36 @@ function openGift() {
     document.getElementById("giftBox").style.display = "none";
     document.getElementById("main").style.display = "block";
     document.getElementById("music").play();
-    showPhoto();
+    showSlide();
     createHearts();
     createConfetti();
 }
 
-function showPhoto() {
-    document.getElementById("photo").src = photos[i].src;
-    document.getElementById("caption").innerText = photos[i].text;
+function showSlide() {
+    const photo = document.getElementById("photo");
+    const message = document.getElementById("messageCard");
+    const caption = document.getElementById("caption");
+
+    if (i < photos.length) {
+        photo.style.display = "block";
+        message.style.display = "none";
+        photo.src = photos[i].src;
+        caption.innerText = photos[i].text;
+    } else {
+        photo.style.display = "none";
+        message.style.display = "block";
+        caption.innerText = "";
+    }
 }
 
 function next() {
-    i = (i + 1) % photos.length;
-    showPhoto();
+    if (i <= photos.length) i++;
+    showSlide();
 }
 
 function prev() {
-    i = (i - 1 + photos.length) % photos.length;
-    showPhoto();
+    if (i > 0) i--;
+    showSlide();
 }
 
 function cutCake() {
@@ -232,17 +271,13 @@ function cutCake() {
 }
 
 function playVoice() {
-    let v = document.getElementById("voice");
-    let s = document.getElementById("song");
-    s.pause(); s.currentTime = 0;
-    v.play();
+    document.getElementById("song").pause();
+    document.getElementById("voice").play();
 }
 
 function playSong() {
-    let v = document.getElementById("voice");
-    let s = document.getElementById("song");
-    v.pause(); v.currentTime = 0;
-    s.play();
+    document.getElementById("voice").pause();
+    document.getElementById("song").play();
 }
 
 /* Effects */
@@ -268,7 +303,7 @@ function createConfettiBurst() {
     c.style.width = "8px";
     c.style.height = "8px";
     c.style.background =
-        ["yellow", "pink", "white", "red"][Math.floor(Math.random() * 4)];
+        ["yellow","pink","white","red"][Math.floor(Math.random()*4)];
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 3000);
 }
