@@ -58,7 +58,6 @@ img {
     width: 200px;
     margin-top: 20px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 #cake:active {
@@ -133,18 +132,25 @@ button {
     <h2>Cut the Cake 🎂</h2>
     <img id="cake" src="cake.png" onclick="cutCake()">
 
-    <!-- Voice -->
+    <!-- Audio buttons -->
     <br>
-    <button onclick="playVoice()">🎤 Play My Message</button>
+    <button onclick="playVoice()">💌 Hear My Message</button>
+    <button onclick="playSong()">🎂 Play Birthday Song</button>
 </div>
 
-<!-- Audio -->
+<!-- Background Music -->
 <audio id="music" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
 </audio>
 
+<!-- Voice -->
 <audio id="voice">
     <source src="voice.mp3">
+</audio>
+
+<!-- Birthday Song -->
+<audio id="song">
+    <source src="happybirthday.mp3">
 </audio>
 
 <script>
@@ -185,15 +191,28 @@ function prev() {
     showPhoto();
 }
 
-/* Cake cut */
+/* Cake */
 function cutCake() {
     alert("YAYYY 🎉 Cake cut!! Love you mom 💖");
-    for(let j=0;j<30;j++) createConfettiBurst();
+    for(let j=0;j<40;j++) createConfettiBurst();
 }
 
 /* Voice */
 function playVoice() {
-    document.getElementById("voice").play();
+    let v = document.getElementById("voice");
+    let s = document.getElementById("song");
+    s.pause();
+    s.currentTime = 0;
+    v.play();
+}
+
+/* Song */
+function playSong() {
+    let v = document.getElementById("voice");
+    let s = document.getElementById("song");
+    v.pause();
+    v.currentTime = 0;
+    s.play();
 }
 
 /* Hearts */
@@ -208,7 +227,7 @@ function createHearts() {
     }, 300);
 }
 
-/* Confetti rain */
+/* Confetti */
 function createConfetti() {
     setInterval(() => {
         createConfettiBurst();
